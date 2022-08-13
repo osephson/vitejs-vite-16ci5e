@@ -15,10 +15,10 @@ const generatedCount = ref(0);
 
 function validate() {
   const errs = [];
-  if (count.value > 5 || count.value < 0)
-    errs.push('Count of cards should be between 0 and 5.');
-  if (cols.value > 5 || cols.value < 0)
-    errs.push('Number of rows/columns should be between 0 and 5.');
+  if (count.value > 5)
+    errs.push('Count of cards should be less than or equal to 5.');
+  if (cols.value > 5)
+    errs.push('Number of rows/columns should be less than or equal to 5.');
 
   errors.value = errs;
   return !errs.length;
@@ -54,11 +54,13 @@ watch([count, cols], ([newcount, newCols]) => {
     >
       <div class="xsm:flex xsm:justify-between">
         <div class="xsm:flex">
-          <div class="font-[Open_sans] my-1.5">
-            Generate <input type="number" v-model="count" /> random cards,
+          <div class="font-[Open_sans] my-1.5 mr-1">
+            Generate
+            <input type="number" v-model="count" :min="0" /> random cards,
           </div>
           <div class="font-[Open_sans] my-1.5">
-            each with <input type="number" v-model="cols" /> rows/columns.
+            each with
+            <input type="number" v-model="cols" :min="0" /> rows/columns.
           </div>
         </div>
 
@@ -81,11 +83,9 @@ watch([count, cols], ([newcount, newCols]) => {
         </button>
       </div>
 
-      <div>
-        <ul class="text-red">
-          <li v-for="e in errors">{{ e }}</li>
-        </ul>
-      </div>
+      <ul class="text-red">
+        <li v-for="e in errors">{{ e }}</li>
+      </ul>
     </form>
 
     <div
