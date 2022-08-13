@@ -38,11 +38,11 @@ onMounted(() => {
           flex
           items-center
           justify-center
-          w-[60px]
-          h-[60px]
+          w-60px
+          h-60px
         "
       >
-        <span class="font-black text-4xl leading-[47px]">{{
+        <span class="font-black text-4xl leading-47px">{{
           letters[(i - 1) * cols + (j - 1)]
         }}</span>
       </div>
@@ -50,8 +50,4 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-a {
-  color: #42b983;
-}
-</style>
+<style scoped></style>
