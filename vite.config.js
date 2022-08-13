@@ -4,14 +4,5 @@ import unocss from 'unocss/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    unocss({
-      theme: {
-        breakpoints: {
-          xsm: '765px',
-        },
-      },
-    }),
-  ],
+  plugins: [vue(), unocss()],
 });

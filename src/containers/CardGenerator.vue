@@ -36,63 +36,65 @@ watch([count, cols], ([newcount, newCols]) => {
 </script>
 
 <template>
-  <div class="px-4 pt-52px xsm:px-76px">
-    <h1 class="font-bold leading-63px text-5xl">Card Generator</h1>
+  <div class="flex justify-center">
+    <div class="px-4 pt-52px">
+      <span class="font-bold leading-63px text-5xl">Card Generator</span>
 
-    <form
-      class="
-        text-xs
-        bg-white
-        p-1.5
-        px-3
-        rounded
-        drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
-      "
-      @submit.prevent="generate"
-    >
-      <div class="xsm:flex xsm:justify-between">
-        <div class="xsm:flex">
-          <div class="font-[Open_sans] my-1.5 mr-1">
-            Generate
-            <input type="number" v-model="count" :min="0" /> random cards,
+      <form
+        class="
+          text-xs
+          bg-white
+          p-1.5
+          px-3
+          rounded
+          drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
+          w-343px
+          sm:w-612px
+        "
+        @submit.prevent="generate"
+      >
+        <div class="sm:flex sm:justify-between">
+          <div class="sm:flex">
+            <div class="font-[Open_sans] my-1.5 mr-1">
+              Generate
+              <input type="number" v-model="count" :min="0" /> random cards,
+            </div>
+            <div class="font-[Open_sans] my-1.5">
+              each with
+              <input type="number" v-model="cols" :min="0" /> rows/columns.
+            </div>
           </div>
-          <div class="font-[Open_sans] my-1.5">
-            each with
-            <input type="number" v-model="cols" :min="0" /> rows/columns.
-          </div>
+
+          <button
+            class="
+              px-13px
+              py-7px
+              bg-#0D6EFD
+              rounded
+              w-full
+              my-6px
+              sm:w-auto
+              disabled:opacity-[0.5]
+            "
+            :disabled="isDisabled"
+          >
+            <span class="text-white font-bold"> Generate </span>
+          </button>
         </div>
 
-        <button
-          class="
-            px-13px
-            py-7px
-            bg-#0D6EFD
-            rounded
-            text-white
-            font-bold
-            my-1.5
-            w-full
-            xsm:w-auto
-            disabled:opacity-[0.5]
-          "
-          :disabled="isDisabled"
-        >
-          Generate
-        </button>
+        <ul class="text-red">
+          <li v-for="e in errors">{{ e }}</li>
+        </ul>
+      </form>
+
+      <div
+        v-if="realCount && realCols"
+        v-for="index in realCount"
+        :key="generatedCount + index"
+        class="flex justify-center my-34px"
+      >
+        <letter-card :cols="realCols" />
       </div>
-
-      <ul class="text-red">
-        <li v-for="e in errors">{{ e }}</li>
-      </ul>
-    </form>
-
-    <div
-      v-if="realCount && realCols"
-      v-for="index in realCount"
-      :key="generatedCount + index"
-      class="flex justify-center my-34px"
-    >
-      <letter-card :cols="realCols" />
     </div>
   </div>
 </template>
