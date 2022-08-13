@@ -17,8 +17,6 @@ const generateLetters = (cnt) => {
     letters.splice(index, 1);
   }
 
-  console.log({ result }, 1);
-
   return result;
 };
 
