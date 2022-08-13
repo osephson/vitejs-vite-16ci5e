@@ -15,10 +15,8 @@ const generatedCount = ref(0);
 
 function validate() {
   const errs = [];
-  if (count.value > 5)
-    errs.push('Count of cards should be less than or equal to 5.');
-  if (cols.value > 5)
-    errs.push('Number of rows/columns should be less than or equal to 5.');
+  if (count.value > 5) errs.push('Maximum count of cards is 5.');
+  if (cols.value > 5) errs.push('Maximum number of rows/columns is 5.');
 
   errors.value = errs;
   return !errs.length;
