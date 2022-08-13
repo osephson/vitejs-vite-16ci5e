@@ -9,10 +9,10 @@ const count = ref(0);
 </script>
 
 <template>
-  <h1 class="font-serif">{{ msg }}</h1>
+  <h1 class="font-serif">{{ msg + 'abc' }}</h1>
 
   <p>
-    Recommended IDE setup:
+    Recommended IDE setup123:
     <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>
     +
     <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
