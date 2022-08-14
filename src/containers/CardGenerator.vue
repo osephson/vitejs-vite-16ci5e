@@ -1,8 +1,103 @@
 <script setup>
+import { ref, watch, readonly } from 'vue';
 import LetterCard from '../components/LetterCard.vue';
+
+const count = ref(0);
+const cols = ref(0);
+
+const isDisabled = ref(true);
+const errors = ref([]);
+
+const realCount = ref(0);
+const realCols = ref(0);
+
+const generatedCount = ref(0);
+
+function validate() {
+  const errs = [];
+  if (count.value > 5) errs.push('Maximum count of cards is 5.');
+  if (cols.value > 5) errs.push('Maximum number of rows/columns is 5.');
+
+  errors.value = errs;
+  return !errs.length;
+}
+
+function generate() {
+  if (!validate()) return;
+  realCount.value = count.value;
+  realCols.value = cols.value;
+
+  generatedCount.value += count.value;
+}
+
+watch([count, cols], ([newcount, newCols]) => {
+  isDisabled.value = !(newcount && newCols);
+});
 </script>
 
 <template>
-  <h1 class="font-bold text-[48px] leading-[63px] famil">Card Generator</h1>
-  <letter-card :cols="25" />
+  <div class="flex justify-center">
+    <div class="pt-52px">
+      <h1 class="font-bold leading-63px text-5xl text-center sm:text-left">
+        Card Generator
+      </h1>
+
+      <div class="flex justify-center">
+        <form
+          class="
+            text-xs
+            bg-white
+            p-1.5
+            px-3
+            rounded
+            drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]
+            w-343px
+            sm:w-612px
+          "
+          @submit.prevent="generate"
+        >
+          <div class="sm:flex sm:justify-between">
+            <div class="sm:flex">
+              <div class="font-[Open_sans] py-1.5 pr-1">
+                Generate
+                <input type="number" v-model="count" :min="0" /> random cards,
+              </div>
+              <div class="font-[Open_sans] py-1.5">
+                each with
+                <input type="number" v-model="cols" :min="0" /> rows/columns.
+              </div>
+            </div>
+
+            <button
+              class="
+                px-13px
+                py-7px
+                bg-#0D6EFD
+                rounded
+                my-1.5
+                w-full
+                sm:w-auto
+                disabled:opacity-[0.5]
+              "
+              :disabled="isDisabled"
+            >
+              <span class="text-white text-base font-bold"> Generate </span>
+            </button>
+          </div>
+
+          <ul class="text-red">
+            <li v-for="e in errors">{{ e }}</li>
+          </ul>
+        </form>
+      </div>
+      <div
+        v-if="realCount && realCols"
+        v-for="index in realCount"
+        :key="generatedCount + index"
+        class="flex justify-center my-36px sm:my-34px"
+      >
+        <letter-card :cols="realCols" />
+      </div>
+    </div>
+  </div>
 </template>
